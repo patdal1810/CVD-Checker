@@ -1,0 +1,32 @@
+{
+  "generator-jhipster": {
+    "applicationType": "monolith",
+    "authenticationType": "jwt",
+    "baseName": "heartRiskApp",
+    "buildTool": "maven",
+    "cacheProvider": "caffeine",
+    "clientFramework": "angular",
+    "clientTestFrameworks": [],
+    "clientTheme": "none",
+    "creationTimestamp": 1758831865963,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Memory",
+    "enableHibernateCache": false,
+    "enableTranslation": false,
+    "entities": [],
+    "feignClient": null,
+    "jhipsterVersion": "8.11.0",
+    "jwtSecretKey": "OWUwY2I4ZTg2MDgzMzZiYTExZWM4Yjg4NmFjMmU3OGM0MTgwNmE3ODFjZDgzNmJmOGZhMTdmMWJjMDcxZmM4YzY5NjcxMzYwYmNhMWQwYWZhZjkxZGYyY2Y2MTA5ODA1YjAyMWRkNmRmMzZhYjFlNDQwMmEwMDFiZjQ5MGFjOTY=",
+    "microfrontend": null,
+    "microfrontends": [],
+    "nativeLanguage": "en",
+    "packageName": "com.cwp.heartriskapp",
+    "prodDatabaseType": "postgresql",
+    "reactive": false,
+    "serverPort": null,
+    "serviceDiscoveryType": null,
+    "syncUserWithIdp": null,
+    "testFrameworks": [],
+    "withAdminUi": false
+  }
+}
