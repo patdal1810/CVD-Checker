@@ -1,4 +1,3 @@
-# speeds up builds and avoids leaking local junk into the image
 .git
 .gitignore
 node_modules
