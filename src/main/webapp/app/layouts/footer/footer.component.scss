@@ -1,0 +1,23 @@
+/* Base footer */
+.footer {
+  background: color-mix(in oklab, var(--bg) 88%, var(--primary) 12%);
+  border-top: 1px solid var(--border);
+  color: var(--text);
+}
+.footer p {
+  margin: 0;
+  padding: 1rem 0;
+  text-align: center;
+  font-weight: 300;
+  font-size: 14px; /* ~18px */
+  color: color-mix(in oklab, var(--text) 90%, var(--primary) 10%);
+}
+
+/* Dark theme nudge */
+:root[data-theme='dark'] .footer {
+  background: color-mix(in oklab, var(--bg) 92%, #000 8%);
+  border-top-color: color-mix(in oklab, var(--border) 80%, #000 20%);
+}
+:root[data-theme='dark'] .footer p {
+  color: color-mix(in oklab, #ffffff 85%, var(--primary) 15%);
+}

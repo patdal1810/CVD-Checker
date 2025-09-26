@@ -1,58 +1,400 @@
-<div class="row">
-  <div class="col-md-3">
-    <span class="hipster img-fluid rounded"></span>
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content container">
+    <div class="badge">💚 Heart health matters</div>
+    <h1 class="title">
+      Know your risk early.<br class="hide-sm" />
+      Live stronger, longer.
+    </h1>
+    <p class="subtitle">Simple inputs. Instant insights. Evidence-informed tips to improve your heart health.</p>
+    <div class="hero-ctas">
+      <a href="#risk" class="cta">Check Your Risk</a>
+      <a href="#learn" class="cta ghost">Learn more</a>
+    </div>
+    <ul class="trust">
+      <li>🔒 No login required</li>
+      <li>⚡ Fast & private</li>
+      <li>🩺 Wellness-focused</li>
+    </ul>
   </div>
+  <div class="hero-decor"><span class="bubble b1"></span><span class="bubble b2"></span><span class="bubble b3"></span></div>
+</div>
 
-  <div class="col-md-9">
-    <h1 class="display-4"><span>Welcome, Java Hipster!</span> (Heart Risk App)</h1>
+<section id="learn" class="benefits container">
+  <h2>Why your heart matters</h2>
+  <p class="section-lead">Small changes today can dramatically improve long-term outcomes.</p>
 
-    <p class="lead">This is your homepage</p>
+  <div class="grid">
+    <div class="card">
+      <div class="ico">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 21s-6.716-4.382-9.36-7.027A6.62 6.62 0 0 1 12 4.54a6.62 6.62 0 0 1 9.36 9.433C18.716 16.618 12 21 12 21Z" />
+        </svg>
+      </div>
+      <h3>Early detection</h3>
+      <p>Spot elevated risk before symptoms show, when interventions work best.</p>
+    </div>
+    <div class="card">
+      <div class="ico">
+        <svg viewBox="0 0 24 24"><path d="M3 3h2v18H3zM7 17l4-4 3 3 6-6 1.5 1.5L14 20l-3-3-4 4z" /></svg>
+      </div>
+      <h3>Actionable insights</h3>
+      <p>Clear recommendations to improve key numbers like BP and biomarkers.</p>
+    </div>
+    <div class="card">
+      <div class="ico">
+        <svg viewBox="0 0 24 24"><path d="M12 2l7 3v6c0 5-3.5 9.74-7 11-3.5-1.26-7-6-7-11V5l7-3z" /></svg>
+      </div>
+      <h3>Private by design</h3>
+      <p>Your inputs stay local to your session and are used only to compute results.</p>
+    </div>
+    <div class="card">
+      <div class="ico">
+        <svg viewBox="0 0 24 24">
+          <path d="M5 3l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4zm12 6l1.2 2.4L20.6 13l-2.4 1.6L16.6 17l-1.2-2.4L13 13l2.4-1.6L16.6 9z" />
+        </svg>
+      </div>
+      <h3>Instant feedback</h3>
+      <p>Lightweight model delivers results in a blink—no waiting, no friction.</p>
+    </div>
+  </div>
+</section>
 
-    <div>
-      @if (account() !== null) {
-        <div class="alert alert-success">
-          @if (account(); as accountRef) {
-            <span id="home-logged-message">You are logged in as user &quot;{{ accountRef.login }}&quot;.</span>
-          }
-        </div>
-      } @else {
-        <div class="alert alert-warning">
-          <span>If you want to </span>
-          <a class="alert-link" (click)="login()">sign in</a
-          ><span
-            >, you can try the default accounts:<br />- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;) <br />- User
-            (login=&quot;user&quot; and password=&quot;user&quot;).</span
-          >
-        </div>
-
-        <div class="alert alert-warning">
-          <span>You don&apos;t have an account yet?</span>&nbsp;
-          <a class="alert-link" routerLink="/account/register">Register a new account</a>
-        </div>
-      }
+<section id="risk" class="predict">
+  <div class="container">
+    <div class="section-head">
+      <h2>Check your risk</h2>
+      <p class="section-lead">Fill the quick form and get a probability score with a simple “High/Low” decision.</p>
     </div>
 
-    <p>If you have any question on JHipster:</p>
+    <div class="form-wrap glass">
+      <form (ngSubmit)="onSubmit()" #f="ngForm" class="form-grid" novalidate>
+        <div class="field">
+          <label for="age" class="label">
+            <span>Age</span>
+            <button
+              type="button"
+              class="help-btn"
+              [ngbTooltip]="'…'"
+              tooltipClass="tt-theme"
+              container="body"
+              placement="top"
+              triggers="mouseenter:mouseleave focus:blur click:blur"
+              [openDelay]="80"
+              [closeDelay]="60"
+              aria-label="What is Age?"
+            >
+              <fa-icon icon="circle-info"></fa-icon>
+            </button>
+          </label>
+          <input id="age" type="number" name="age" [(ngModel)]="form.age" required min="1" />
+        </div>
 
-    <ul>
-      <li><a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">JHipster homepage</a></li>
-      <li>
-        <a href="https://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer">JHipster on Stack Overflow</a>
-      </li>
-      <li>
-        <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer"
-          >JHipster bug tracker</a
-        >
-      </li>
-      <li>
-        <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">JHipster public chat room</a>
-      </li>
-      <li><a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer">follow &#64;jhipster on Twitter</a></li>
-    </ul>
+        <div class="field">
+          <label for="sex" class="label">
+            <span>Sex</span>
+            <button
+              type="button"
+              class="help-btn"
+              [ngbTooltip]="'Biological sex at birth.'"
+              tooltipClass="tt-theme"
+              container="body"
+              placement="top"
+              triggers="mouseenter:mouseleave focus:blur click:blur"
+              [openDelay]="80"
+              [closeDelay]="60"
+              aria-label="What is Sex?"
+            >
+              <fa-icon icon="circle-info"></fa-icon>
+            </button>
+          </label>
+          <select id="sex" name="sex" [(ngModel)]="form.sex" required>
+            <option [value]="1">Male</option>
+            <option [value]="0">Female</option>
+          </select>
+        </div>
 
-    <p>
-      <span>If you like JHipster, don&apos;t forget to give us a star on</span>
-      <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">GitHub</a>!
-    </p>
+        <div class="field">
+          <label for="anaemia" class="label">
+            <span>Anaemia</span>
+            <button
+              type="button"
+              class="help-btn"
+              [ngbTooltip]="'Low red blood cells or haemoglobin.'"
+              tooltipClass="tt-theme"
+              container="body"
+              placement="top"
+              triggers="mouseenter:mouseleave focus:blur click:blur"
+              [openDelay]="80"
+              [closeDelay]="60"
+              aria-label="What is Anaemia?"
+            >
+              <fa-icon icon="circle-info"></fa-icon>
+            </button>
+          </label>
+          <select id="anaemia" name="anaemia" [(ngModel)]="form.anaemia" required>
+            <option [value]="1">Yes</option>
+            <option [value]="0">No</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="diabetes" class="label">
+            <span>Diabetes</span>
+            <button
+              type="button"
+              class="help-btn"
+              [ngbTooltip]="'Diagnosed diabetes (type 1 or 2).'"
+              tooltipClass="tt-theme"
+              container="body"
+              placement="top"
+              triggers="mouseenter:mouseleave focus:blur click:blur"
+              [openDelay]="80"
+              [closeDelay]="60"
+              aria-label="What is Diabetes?"
+            >
+              <fa-icon icon="circle-info"></fa-icon>
+            </button>
+          </label>
+          <select id="diabetes" name="diabetes" [(ngModel)]="form.diabetes" required>
+            <option [value]="1">Yes</option>
+            <option [value]="0">No</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="hbp" class="label">
+            <span>High Blood Pressure</span>
+            <button
+              type="button"
+              class="help-btn"
+              [ngbTooltip]="'Hypertension diagnosis or BP ≥140/90 not on meds.'"
+              tooltipClass="tt-theme"
+              container="body"
+              placement="top"
+              triggers="mouseenter:mouseleave focus:blur click:blur"
+              [openDelay]="80"
+              [closeDelay]="60"
+              aria-label="What is High Blood Pressure?"
+            >
+              <fa-icon icon="circle-info"></fa-icon>
+            </button>
+          </label>
+          <select id="hbp" name="high_blood_pressure" [(ngModel)]="form.high_blood_pressure" required>
+            <option [value]="1">Yes</option>
+            <option [value]="0">No</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="smoking" class="label">
+            <span>Smoking</span>
+            <button
+              type="button"
+              class="help-btn"
+              [ngbTooltip]="'Current smoker (any tobacco in last 30 days).'"
+              tooltipClass="tt-theme"
+              container="body"
+              placement="top"
+              triggers="mouseenter:mouseleave focus:blur click:blur"
+              [openDelay]="80"
+              [closeDelay]="60"
+              aria-label="What is Smoking?"
+            >
+              <fa-icon icon="circle-info"></fa-icon>
+            </button>
+          </label>
+          <select id="smoking" name="smoking" [(ngModel)]="form.smoking" required>
+            <option [value]="1">Yes</option>
+            <option [value]="0">No</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="ef" class="label">
+            <span>Ejection Fraction</span>
+            <button
+              type="button"
+              class="help-btn"
+              [ngbTooltip]="'% of blood the left ventricle pumps each beat (normal 50–70%).'"
+              tooltipClass="tt-theme"
+              container="body"
+              placement="top"
+              triggers="mouseenter:mouseleave focus:blur click:blur"
+              [openDelay]="80"
+              [closeDelay]="60"
+              aria-label="What is Ejection Fraction?"
+            >
+              <fa-icon icon="circle-info"></fa-icon>
+            </button>
+          </label>
+          <input id="ef" type="number" name="ejection_fraction" [(ngModel)]="form.ejection_fraction" required />
+        </div>
+
+        <div class="field">
+          <label for="cpk" class="label">
+            <span>Creatinine Phosphokinase</span>
+            <button
+              type="button"
+              class="help-btn"
+              [ngbTooltip]="'CPK (U/L) — enzyme that rises with muscle/heart injury.'"
+              tooltipClass="tt-theme"
+              container="body"
+              placement="top"
+              triggers="mouseenter:mouseleave focus:blur click:blur"
+              [openDelay]="80"
+              [closeDelay]="60"
+              aria-label="What is CPK?"
+            >
+              <fa-icon icon="circle-info"></fa-icon>
+            </button>
+          </label>
+          <input id="cpk" type="number" name="creatinine_phosphokinase" [(ngModel)]="form.creatinine_phosphokinase" required />
+        </div>
+
+        <div class="field">
+          <label for="platelets" class="label">
+            <span>Platelets</span>
+            <button
+              type="button"
+              class="help-btn"
+              [ngbTooltip]="'Platelet count (kiloplatelets/µL).'"
+              tooltipClass="tt-theme"
+              container="body"
+              placement="top"
+              triggers="mouseenter:mouseleave focus:blur click:blur"
+              [openDelay]="80"
+              [closeDelay]="60"
+              aria-label="What are Platelets?"
+            >
+              <fa-icon icon="circle-info"></fa-icon>
+            </button>
+          </label>
+          <input id="platelets" type="number" name="platelets" [(ngModel)]="form.platelets" required />
+        </div>
+
+        <div class="field">
+          <label for="sc" class="label">
+            <span>Serum Creatinine</span>
+            <button
+              type="button"
+              class="help-btn"
+              [ngbTooltip]="'mg/dL — kidney function marker; higher can increase risk.'"
+              tooltipClass="tt-theme"
+              container="body"
+              placement="top"
+              triggers="mouseenter:mouseleave focus:blur click:blur"
+              [openDelay]="80"
+              [closeDelay]="60"
+              aria-label="What is Serum Creatinine?"
+            >
+              <fa-icon icon="circle-info"></fa-icon>
+            </button>
+          </label>
+          <input id="sc" type="number" step="0.1" name="serum_creatinine" [(ngModel)]="form.serum_creatinine" required />
+        </div>
+
+        <div class="field">
+          <label for="ss" class="label">
+            <span>Serum Sodium</span>
+            <button
+              type="button"
+              class="help-btn"
+              [ngbTooltip]="'mEq/L — electrolyte balance; low levels may signal risk.'"
+              tooltipClass="tt-theme"
+              container="body"
+              placement="top"
+              triggers="mouseenter:mouseleave focus:blur click:blur"
+              [openDelay]="80"
+              [closeDelay]="60"
+              aria-label="What is Serum Sodium?"
+            >
+              <fa-icon icon="circle-info"></fa-icon>
+            </button>
+          </label>
+          <input id="ss" type="number" name="serum_sodium" [(ngModel)]="form.serum_sodium" required />
+        </div>
+
+        <div class="field">
+          <label for="time" class="label">
+            <span>Observation Time (days)</span>
+            <button
+              type="button"
+              class="help-btn"
+              [ngbTooltip]="'Days of follow-up or observation used by the model.'"
+              tooltipClass="tt-theme"
+              container="body"
+              placement="top"
+              triggers="mouseenter:mouseleave focus:blur click:blur"
+              [openDelay]="80"
+              [closeDelay]="60"
+              aria-label="What is Observation Time?"
+            >
+              <fa-icon icon="circle-info"></fa-icon>
+            </button>
+          </label>
+          <input id="time" type="number" name="time" [(ngModel)]="form.time" required />
+        </div>
+
+        <div class="field span-2">
+          <label for="threshold" class="label">
+            <span>Decision Threshold</span>
+            <button
+              type="button"
+              class="help-btn"
+              [ngbTooltip]="'Probability cutoff for High vs Low risk (default 0.50). Lower = more High results.'"
+              tooltipClass="tt-theme"
+              container="body"
+              placement="top"
+              triggers="mouseenter:mouseleave focus:blur click:blur"
+              [openDelay]="80"
+              [closeDelay]="60"
+              aria-label="What is Decision Threshold?"
+            >
+              <fa-icon icon="circle-info"></fa-icon>
+            </button>
+          </label>
+          <input id="threshold" type="number" step="0.01" name="threshold" [(ngModel)]="threshold" aria-describedby="th-help" />
+          <small id="th-help" class="help">Lower = more “High” results (default 0.50)</small>
+        </div>
+
+        <div class="actions span-2">
+          <button class="cta large" [disabled]="f.invalid || loading">
+            <span *ngIf="!loading">Predict Risk</span>
+            <span class="spinner" *ngIf="loading" aria-hidden="true"></span>
+            <span class="sr-only" *ngIf="loading">Predicting…</span>
+          </button>
+          <p class="disclaimer">This tool does not provide medical advice. Consult a healthcare professional.</p>
+        </div>
+      </form>
+
+      <div class="result" *ngIf="result" aria-live="polite">
+        <div class="result-card" [class.high]="result?.risk === 'High'">
+          <div class="result-top">
+            <div class="pill" [class.pill-high]="result?.risk === 'High'">{{ result.risk }} risk</div>
+            <div class="prob">
+              Probability: <strong>{{ result.probability | number: '1.2-4' }}</strong>
+            </div>
+          </div>
+          <p class="tip" *ngIf="result?.risk === 'High'">
+            Tip: Discuss lifestyle tweaks (salt, activity, sleep) and follow-up labs with your clinician.
+          </p>
+          <p class="tip" *ngIf="result?.risk !== 'High'">
+            Keep it up: stay active, hydrate, and keep regular checks on blood pressure & lipids.
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+</section>
+
+<footer class="foot">
+  <div class="container foot-inner">
+    <p>© {{ year }} HeartCare</p>
+    <ul class="foot-links">
+      <li><a href="#learn">About</a></li>
+      <li><a href="#risk">Risk Check</a></li>
+      <li><a href="#">Privacy</a></li>
+    </ul>
+  </div>
+</footer>

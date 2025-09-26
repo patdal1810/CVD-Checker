@@ -9,11 +9,12 @@ import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { EntityNavbarItems } from 'app/entities/entity-navbar-items';
 import { environment } from 'environments/environment';
 import NavbarItem from './navbar-item.model';
+import { ThemeService } from 'app/core/theme.service';
 
 @Component({
   selector: 'jhi-navbar',
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss',
+  styleUrls: ['./navbar.component.scss'], // <-- FIXED (plural)
   imports: [RouterModule, SharedModule, HasAnyAuthorityDirective],
 })
 export default class NavbarComponent implements OnInit {
@@ -28,7 +29,7 @@ export default class NavbarComponent implements OnInit {
   private readonly profileService = inject(ProfileService);
   private readonly router = inject(Router);
 
-  constructor() {
+  constructor(public theme: ThemeService) {
     const { VERSION } = environment;
     if (VERSION) {
       this.version = VERSION.toLowerCase().startsWith('v') ? VERSION : `v${VERSION}`;
@@ -43,21 +44,25 @@ export default class NavbarComponent implements OnInit {
     });
   }
 
+  toggleTheme(): void {
+    this.theme.toggle(); // flips and persists 'light' <-> 'dark'
+  }
+  useSystemTheme(): void {
+    this.theme.clearPreference(); // follows OS again
+  }
+
   collapseNavbar(): void {
     this.isNavbarCollapsed.set(true);
   }
-
+  toggleNavbar(): void {
+    this.isNavbarCollapsed.update(x => !x);
+  }
   login(): void {
     this.router.navigate(['/login']);
   }
-
   logout(): void {
     this.collapseNavbar();
     this.loginService.logout();
     this.router.navigate(['']);
-  }
-
-  toggleNavbar(): void {
-    this.isNavbarCollapsed.update(isNavbarCollapsed => !isNavbarCollapsed);
   }
 }

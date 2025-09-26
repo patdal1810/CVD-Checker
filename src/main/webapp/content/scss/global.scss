@@ -2,16 +2,115 @@
 @import 'bootstrap/scss/functions';
 @import 'bootstrap/scss/variables';
 
+/* ==== THEME TOKENS (Light / Dark / System) ==== */
+:root {
+  --primary: #10b981;
+  --primary-700: #059669;
+  --primary-900: #065f46;
+
+  --bg: #f7fbf9;
+  --surface: #ffffff;
+  --text: #0b1f18;
+  --muted: #68857a;
+  --border: #e4efe9;
+
+  --mint: #ebfff6;
+  --card: #ffffff;
+  --glass: rgba(255, 255, 255, 0.65);
+  --ring: rgba(16, 185, 129, 0.18);
+  --heading: color-mix(in oklab, var(--text) 85%, var(--primary) 15%);
+}
+
+/* Follow OS when the user has NOT chosen */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1512;
+    --surface: #0f1f1a;
+    --text: #eaf7f1;
+    --muted: #b7cbc3;
+    --border: #1e3a31;
+
+    --mint: #0f201b;
+    --card: #0f1f1a;
+    --glass: rgba(20, 35, 30, 0.6);
+    --ring: rgba(16, 185, 129, 0.25);
+  }
+}
+
+/* EXPLICIT user choices override OS */
+:root[data-theme='light'] {
+  --bg: #f7fbf9;
+  --surface: #ffffff;
+  --text: #0b1f18;
+  --muted: #68857a;
+  --border: #e4efe9;
+
+  --mint: #ebfff6;
+  --card: #ffffff;
+  --glass: rgba(255, 255, 255, 0.65);
+  --ring: rgba(16, 185, 129, 0.18);
+}
+
+:root[data-theme='dark'] {
+  --bg: #0b1512;
+  --surface: #0f1f1a;
+  --text: #eaf7f1;
+  --muted: #b7cbc3;
+  --border: #1e3a31;
+
+  --mint: #0f201b;
+  --card: #0f1f1a;
+  --glass: rgba(20, 35, 30, 0.6);
+  --ring: rgba(16, 185, 129, 0.25);
+  --heading: color-mix(in oklab, #ffffff 82%, var(--primary) 18%);
+}
+
+/* Page wrappers should use the theme bg (fixes white frame in dark) */
+html,
+body,
+app-root,
+jhi-app,
+jhi-main,
+.jh-app,
+main,
+.page,
+.content,
+.wrapper,
+.container,
+.container-fluid {
+  background: var(--bg) !important;
+}
+
+/* Cards in dark shouldn’t glow white */
+:root[data-theme='dark'] .card,
+:root[data-theme='dark'] .jh-card {
+  background: color-mix(in oklab, var(--surface) 92%, #000 8%) !important;
+  border-color: color-mix(in oklab, var(--border) 80%, #000 20%) !important;
+}
+
 /* ==============================================================
 Bootstrap tweaks
 ===============================================================*/
 
-body,
 h1,
 h2,
 h3,
 h4 {
-  font-weight: 300;
+  font-weight: 700; /* a bit stronger for headings */
+  color: var(--heading);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+p {
+  color: var(--text);
+  line-height: 1.6;
+}
+
+:root[data-theme='dark'] h1,
+:root[data-theme='dark'] h2,
+:root[data-theme='dark'] h3,
+:root[data-theme='dark'] h4 {
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
 }
 
 /* Increase contrast of links to get 100% on Lighthouse Accessibility Audit. Override this color if you want to change the link color, or use a Bootswatch theme */

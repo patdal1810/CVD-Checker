@@ -1,0 +1,14 @@
+/* Keep the app canvas themed and full-height */
+:host {
+  display: block;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Ensure the app shell (main layout) inherits theme colors */
+jhi-main,
+main {
+  background: var(--bg);
+  color: var(--text);
+}
