@@ -50,6 +50,10 @@ RUN ./mvnw -Pprod -DskipClient -DskipTests package
 # =========================================================
 # 3) RUNTIME — TensorFlow + Java 21 (no TF pip install!)
 # =========================================================
+
+ENV ML_PYTHON=python
+
+
 # CPU image with Python + TF preinstalled (2.16.1)
 FROM tensorflow/tensorflow:2.16.1 AS runtime
 
