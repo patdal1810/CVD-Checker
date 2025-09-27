@@ -11,6 +11,18 @@ ENV HUSKY=0 \
 
 WORKDIR /app
 
+# Copy ML folder into the image
+COPY src/main/resources/ml /app/ml
+
+# Create venv + install deps from requirements.txt
+RUN python3 -m venv /app/venv && \
+    /app/venv/bin/pip install --no-cache-dir -U pip && \
+    /app/venv/bin/pip install --no-cache-dir -r /app/ml/requirements.txt
+
+# Command your Java code will use to run the predictor
+ENV ML_PY_CMD="/app/venv/bin/python /app/ml/predict_heart_risk.py" \
+    PYTHONUNBUFFERED=1
+
 # Copy only files needed to resolve deps first for better caching
 COPY package.json package-lock.json* ./
 # If your package.json lives at the repo root (JHipster default), this is correct.
