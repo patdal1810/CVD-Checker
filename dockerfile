@@ -58,29 +58,33 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certifi
 ENV JAVA_HOME=/opt/java
 ENV PATH="$JAVA_HOME/bin:${PATH}"
 
-# App/runtime env
+# App/runtime env — use python3 explicitly
 ENV SPRING_PROFILES_ACTIVE=prod \
     SERVER_PORT=8080 \
     PYTHONUNBUFFERED=1 \
-    ML_PYTHON=python \
-    ML_PY_CMD="python /app/ml/predict_heart_risk.py"
+    ML_PYTHON=/usr/bin/python3 \
+    ML_PY_CMD="/usr/bin/python3 /app/ml/predict_heart_risk.py"
 
 WORKDIR /app
 
 # Copy ML code & artifacts (ct.joblib, train_columns.json, heart_model.keras, predict_heart_risk.py, requirements.txt)
 COPY src/main/resources/ml /app/ml
 
-# Install lightweight Python deps (TensorFlow is already in the base image)
+# Optional: create a 'python' symlink for any code that expects `python`
+RUN ln -sf "$(command -v python3)" /usr/local/bin/python
+
+# Install lightweight Python deps (TensorFlow already in the base image)
 # Ensure your /app/ml/requirements.txt does NOT list tensorflow
-RUN python -m pip install --no-cache-dir -U pip && \
-    python -m pip install --no-cache-dir pandas==2.2.2 joblib==1.4.2 scikit-learn==1.5.1 && \
+RUN python3 -m pip install --no-cache-dir -U pip && \
+    python3 -m pip install --no-cache-dir pandas==2.2.2 joblib==1.4.2 scikit-learn==1.5.1 && \
     if [ -f /app/ml/requirements.txt ]; then \
-      python -m pip install --no-cache-dir -r /app/ml/requirements.txt ; \
+      python3 -m pip install --no-cache-dir -r /app/ml/requirements.txt ; \
     fi
 
 # Build-time sanity check — fail the image build if imports are missing
-RUN python - <<'PY'
-import pandas, joblib, sklearn, tensorflow
+RUN python3 - <<'PY'
+import sys, pandas, joblib, sklearn, tensorflow
+print("PYTHON:", sys.executable)
 print("Python ML imports OK")
 PY
 
