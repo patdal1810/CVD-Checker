@@ -44,12 +44,12 @@ RUN ./mvnw -Pprod -DskipClient -DskipTests package
 
 
 # =========================================================
-# 3) RUNTIME — TensorFlow + Java 21 (no TF pip install)
+# 3) RUNTIME — TensorFlow + Java 21, with a dedicated venv
 # =========================================================
 # CPU image with Python + TensorFlow (2.16.1) preinstalled
 FROM tensorflow/tensorflow:2.16.1 AS runtime
 
-# Install Java 21 JRE
+# ---- Java 21 JRE ----
 RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certificates && \
     curl -L -o /tmp/jre.tar.gz \
       https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.4%2B7/OpenJDK21U-jre_x64_linux_hotspot_21.0.4_7.tar.gz && \
@@ -58,31 +58,32 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certifi
 ENV JAVA_HOME=/opt/java
 ENV PATH="$JAVA_HOME/bin:${PATH}"
 
-# App/runtime env — use python3 explicitly
+# App/runtime env
 ENV SPRING_PROFILES_ACTIVE=prod \
     SERVER_PORT=8080 \
-    PYTHONUNBUFFERED=1 \
-    ML_PYTHON=/usr/bin/python3 \
-    ML_PY_CMD="/usr/bin/python3 /app/ml/predict_heart_risk.py"
+    PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
 # Copy ML code & artifacts (ct.joblib, train_columns.json, heart_model.keras, predict_heart_risk.py, requirements.txt)
 COPY src/main/resources/ml /app/ml
 
-# Optional: create a 'python' symlink for any code that expects `python`
-RUN ln -sf "$(command -v python3)" /usr/local/bin/python
-
-# Install lightweight Python deps (TensorFlow already in the base image)
-# Ensure your /app/ml/requirements.txt does NOT list tensorflow
-RUN python3 -m pip install --no-cache-dir -U pip && \
-    python3 -m pip install --no-cache-dir pandas==2.2.2 joblib==1.4.2 scikit-learn==1.5.1 && \
+# ---- Create a venv that inherits system site-packages (TensorFlow stays available) ----
+# Then install pandas / joblib / scikit-learn into that venv, and point ML_PYTHON to it.
+RUN python3 -m venv --system-site-packages /opt/venv && \
+    /opt/venv/bin/pip install --no-cache-dir -U pip && \
+    /opt/venv/bin/pip install --no-cache-dir pandas==2.2.2 joblib==1.4.2 scikit-learn==1.5.1 && \
     if [ -f /app/ml/requirements.txt ]; then \
-      python3 -m pip install --no-cache-dir -r /app/ml/requirements.txt ; \
+      /opt/venv/bin/pip install --no-cache-dir -r /app/ml/requirements.txt ; \
     fi
 
+ENV ML_PYTHON=/opt/venv/bin/python \
+    ML_PY_CMD="/opt/venv/bin/python /app/ml/predict_heart_risk.py"
+# (optional) add venv to PATH so 'python' uses it too
+ENV PATH="/opt/venv/bin:${PATH}"
+
 # Build-time sanity check — fail the image build if imports are missing
-RUN python3 - <<'PY'
+RUN ${ML_PYTHON} - <<'PY'
 import sys, pandas, joblib, sklearn, tensorflow
 print("PYTHON:", sys.executable)
 print("Python ML imports OK")
